@@ -46,10 +46,32 @@ basicCN + geom_boxplot()
 basicCN + geom_boxplot(notch=TRUE,outlier.color = "red") + stat_boxplot(geom ='errorbar') + labs(title="Fancy notch boxplot \n with 2 lines")
 ```
 
+It appears that using this data we may be able to reject the null hypothesis. Baising on these box plots, there is a clear difference in how much people drink depending on there seating positions.
+
 ## Numerical Summarys 
+
+```{r}
+favstats(alcohol~Seat,data=davisdata)
+```
+
+The back row is different with there mean being 9.6. The middle row being 3.2. The front row holding the lowest at 1.8.
 
 ## Inferential Tests
 
+```{r}
+model1 <- aov(alcohol~Seat,data=davisdata)
+summary.aov(model1)
+```
+
+We will reject this hypothesis, but we will seek clarification on which rows where different from other rows. 
+
+```{r}
+plot(TukeyHSD(model1))
+```
+
+Using the Tukey plot box we can tell that the front is different from the back, and the middle is different from the back. However there is no difference from the middle and front.
+
 ## Conclusions
 
+Because the categorical variable has more than 2 levels, we have to use anova, not a t-test. The Anova showed there is a difference in alchol consumption among the seat locations Tukey HSD show that the differences where in the back row, and not much different compared to the middle and thr front.
 
